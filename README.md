@@ -35,5 +35,31 @@
       kubectl create -f pod.yaml --namespace=kotlindemo
   ##### 4. 查詢執行中pods
       kubectl get pods --namesapce=kotlindemo
-      
+  
+# 使用depolyment部署
+  ##### 1. depolyment.yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: test-depolyment
+      namespace: kotlindemo
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: kotlindemo-depolyment
+      template:
+        metadata:
+          labels:
+            app: kotlindemo-depolyment
+        spec:
+          containers:
+          - name: pod-demo
+            image: localhost:5000/ron/kotlin/demo:v1
+            ports:
+            - containerPort: 8080
+  ##### 2. 在minikube建立depolyment
+      kubectl create -f depolyment.yaml --namespace=kotlindemo 
+  ##### 3. 可以使用get depolyments來查看已建立的depolyments資訊
+      kubectl get depolyments --namespace=kotlindemo
   

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-depolyment
+  namespace: kotlindemo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kotlindemo-depolyment
+  template:
+    metadata:
+      labels:
+        app: kotlindemo-depolyment
+    spec:
+      containers:
+      - name: pod-demo
+        image: localhost:5000/ron/kotlin/demo:v1
+        ports:
+        - containerPort: 8080
