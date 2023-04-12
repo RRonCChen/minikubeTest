@@ -62,4 +62,27 @@
       kubectl create -f depolyment.yaml --namespace=kotlindemo 
   ##### 3. 可以使用get depolyments來查看已建立的depolyments資訊
       kubectl get depolyments --namespace=kotlindemo
-  
+
+# 使用service(NodePort)存取pod
+  ##### 1. service.yaml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: test-service
+      namespace: kotlindemo
+    spec:
+      type: NodePort
+      ports:
+      - port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: kotlindemo-depolyment
+  ##### 2. 在minikube建立service
+      kubectl create -f service.yaml --namespace=kotlindemo
+  ##### 3. 可以使用get svc來查看已建立的service資訊
+      kubectl get svc --namespace=kotlindemo
+  ##### 4. 可以使用minkube service來取的連接到該service的url(由於我使用driver=docker的模式)，minikube會幫我建立tunnel來連接。
+      minkube service test-service --namespace=kotlindemo --url
+  ##### 5. 可以使用下列指令取的local對應到的docker中執行的minikube建立的service的port號。
+      ps -ef | grep docker@127.0.0.1
