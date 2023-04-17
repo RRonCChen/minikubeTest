@@ -86,3 +86,19 @@
       minkube service test-service --namespace=kotlindemo --url
   ##### 5. 可以使用下列指令取的local對應到的docker中執行的minikube建立的service的port號。
       ps -ef | grep docker@127.0.0.1
+
+# 使用secret儲存ssl certificate
+  ##### 1. secret.yaml
+    apiVersion: v1
+    data: 
+      tls.crt: { "base64 encoded cert" }
+      tls.key: { "base64 encoded key" } 
+    kind: Secret
+    metadata: 
+      name: test-tls
+      namespace: kotlindemo
+    type: kubernetes.io/tls
+  ##### 2. 在minikube建立secret
+      kubectl create  -f secret.yaml --namespace=kotlindemo
+  ##### 3. 可以使用get secret來查看已建立的service資訊
+      kubectl get secret --namespace=kotlindemo
