@@ -102,3 +102,10 @@
       kubectl create  -f secret.yaml --namespace=kotlindemo
   ##### 3. 可以使用get secret來查看已建立的service資訊
       kubectl get secret --namespace=kotlindemo
+
+# 啟用minikube ingress controller
+  ##### 1. 啟用ingress controller
+    minikube addons enable ingress
+  ##### 2. 驗證nginx ingress controller運行狀況
+    kubectl get pods -n ingress-nginx
+
